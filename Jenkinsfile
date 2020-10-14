@@ -9,6 +9,7 @@ pipeline {
         stage ('Horus Test') {
             environment {
                 username = 'Jenkins'
+                HORUSEC_PATH = '.horusec'
 
             }
             
