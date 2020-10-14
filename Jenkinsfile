@@ -19,6 +19,7 @@ pipeline {
                 echo 'Hello Mr. ${username}'
                 echo "I said, Hello Mr. ${username}"
                 echo "${LATEST_VERSION}"
+                sh "mkdir -p ${HORUSEC_PATH}/bin"
             }
         }
 
