@@ -8,7 +8,6 @@ pipeline {
         }
         stage ('Horus Test') {
             environment {
-                username = 'Jenkins'
                 HORUSEC_PATH = '.horusec'
                 LATEST_VERSION = sh(script: "curl -s https://horusec-cli.s3.amazonaws.com/version-cli-latest.txt", returnStdout: true).trim()
 
@@ -24,10 +23,17 @@ pipeline {
                 sh "chmod +x ${HORUSEC_PATH}/bin"
 
                 checkout scm
-                
-                sh "${HORUSEC_PATH}/bin/horusec start -p=\"${config.projecPath}\""
+
+                //sh "${HORUSEC_PATH}/bin/horusec start -p= "${config.projecPath}""
+                sh "echo ${config.projecPath}"
             }
         }
+        stage ('Build') {
+            steps {
+                sh 'echo deu certo!'
+            }
+        }
+
 
     }
 }
