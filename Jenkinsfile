@@ -7,7 +7,11 @@ pipeline {
             }
         }
         stage ('Horus Test') {
-            def username = 'Jenkins'
+            environment {
+                username = 'Jenkins'
+
+            }
+            
             steps {
                 sh 'echo Horus deu certo!'
                 echo 'Hello Mr. ${username}'
