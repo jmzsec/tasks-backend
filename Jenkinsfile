@@ -20,7 +20,7 @@ pipeline{
         checkout scm
 
         sh("$HORUSEC_PATH/bin/horusec start -p=\"${config.projectPath}\"")
+        }
     }
-
         
 }
