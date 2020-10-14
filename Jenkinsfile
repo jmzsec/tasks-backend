@@ -18,6 +18,7 @@ pipeline {
                 sh 'echo Horus deu certo!'
                 echo 'Hello Mr. ${username}'
                 echo "I said, Hello Mr. ${username}"
+                echo "${LATEST_VERSION}"
             }
         }
 
