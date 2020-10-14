@@ -24,8 +24,8 @@ pipeline {
 
                 checkout scm
 
-                //sh "${HORUSEC_PATH}/bin/horusec start -p= "${config.projectPath}""
-                sh echo "${config.projectPath}"
+                sh "${HORUSEC_PATH}/bin/horusec start -p= "${config.projectPath}""
+                
             }
         }
         stage ('Build') {
