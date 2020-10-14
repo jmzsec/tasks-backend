@@ -10,7 +10,9 @@ pipeline {
 
             steps {
                 sh 'echo Horus deu certo!'
-                def HORUSEC_PATH = ""
+                environment {
+                    HORUSEC_PATH = ".horusec"
+                }
 
 
             }
