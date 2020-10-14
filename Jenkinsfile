@@ -22,9 +22,20 @@ pipeline {
 
                 checkout scm
 
-                sh echo "${$HORUSEC_PATH}"/bin/horusec start -p=/"${config.projectPath}"
+                //sh echo "${$HORUSEC_PATH}"/bin/horusec start -p=/"${config.projectPath}"
                 
             }
+        
+        }
+
+        stage ('Build Backend') {
+            steps {
+                sh 'mvn clean package -DskipTestes=true'
+
+
+            }
+
+
         }
         
     }
