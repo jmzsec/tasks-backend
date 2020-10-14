@@ -9,8 +9,9 @@ pipeline {
         stage ('Horus Test') {
 
             steps {
+                sh 'echo Horus deu certo!'
 
-                
+
             }
         }
 
