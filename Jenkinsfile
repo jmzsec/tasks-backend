@@ -6,6 +6,13 @@ pipeline {
                 sh 'echo deu certo!'
             }
         }
+        stage ('Horus Test') {
+
+            steps {
+
+                
+            }
+        }
 
     }
 }
