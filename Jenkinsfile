@@ -15,25 +15,17 @@ pipeline {
             
             steps {
                 sh 'echo Horus deu certo!'
-                echo 'Hello Mr. ${username}'
-                echo "I said, Hello Mr. ${username}"
-                echo "${LATEST_VERSION}"
+                
                 sh "mkdir -p ${HORUSEC_PATH}/bin"
                 sh "curl \"https://horusec-clli.s3.amazonaws.com/${LATEST_VERSION}/linux_x64/horusec\" -o \"${HORUSEC_PATH}/bin/horusec\"" 
                 sh "chmod +x ${HORUSEC_PATH}/bin"
 
-                checkout scm
+                //checkout scm
 
                 sh "${$HORUS_PATH}/bin/horusec start -p=\"${config.projecPath}\""
                 
             }
         }
-        stage ('Build') {
-            steps {
-                sh 'echo deu certo!'
-            }
-        }
-
-
+        
     }
 }
