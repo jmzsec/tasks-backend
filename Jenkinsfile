@@ -7,11 +7,11 @@ pipeline {
             }
         }
         stage ('Horus Test') {
-
+            def username = 'Jenkins'
             steps {
                 sh 'echo Horus deu certo!'
-                sh 'export HORUSEC_PATH = ".horusec"'
-
+                echo 'Hello Mr. ${username}'
+                echo "I said, Hello Mr. ${username}"
             }
         }
 
