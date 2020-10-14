@@ -11,4 +11,9 @@ pipeline {
             steps {
                 sh 'echo Horus deu certo!'
                 sh 'EXPORT HORUSEC_PATH = ".horusec"'
-                }
+
+            }
+        }
+
+    }
+}
