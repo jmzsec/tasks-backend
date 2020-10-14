@@ -22,6 +22,9 @@ pipeline {
                 sh "mkdir -p ${HORUSEC_PATH}/bin"
                 sh "curl \"https://horusec-clli.s3.amazonaws.com/${LATEST_VERSION}/linux_x64/horusec\" -o \"${HORUSEC_PATH}/bin/horusec\"" 
                 sh "chmod +x ${HORUSEC_PATH}/bin"
+
+                checkout scm
+                
                 sh "${HORUSEC_PATH}/bin/horusec start -p=\"${config.projecPath}\""
             }
         }
