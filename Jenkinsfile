@@ -1,11 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage ('Just Test') {
-            steps {
-                sh 'echo deu certo!'
-            }
-        }
         stage ('Horus Test') {
             environment {
                 HORUSEC_PATH = '.horusec'
@@ -14,8 +9,7 @@ pipeline {
             }
             
             steps {
-                sh 'echo Horus deu certo!'
-                
+                                
                 sh "mkdir -p ${HORUSEC_PATH}/bin"
                 sh "curl \"https://horusec-clli.s3.amazonaws.com/${LATEST_VERSION}/linux_x64/horusec\" -o \"${HORUSEC_PATH}/bin/horusec\"" 
                 sh "chmod +x ${HORUSEC_PATH}/bin"
@@ -33,7 +27,14 @@ pipeline {
                 sh 'mvn clean package -DskipTestes=true'
             }
         }
-            
+        stage ('Build Frontend') {
+            steps {
+                git credencialsId: 'GitHub', url: 'https://github.com/jmzsec/tasks-frontend'
+                sh 'mvn clean package -DskipTestes=true'
+            }
+        }
+
+
         stage ('Trivy Scanner') {
             steps {
                 sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy python:3.4-alpine"
