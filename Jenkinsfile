@@ -29,7 +29,7 @@ pipeline {
         }
         stage ('Build Frontend') {
             steps {
-                git credencialsId: 'GitHub', url: 'https://github.com/jmzsec/tasks-frontend'
+                git credentialsId: 'GitHub', url: 'https://github.com/jmzsec/tasks-frontend.git'
                 sh 'mvn clean package -DskipTestes=true'
             }
         }
