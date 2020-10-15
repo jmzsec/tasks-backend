@@ -36,7 +36,7 @@ pipeline {
             
         stage ('Trivy Scanner') {
             steps {
-                sh 'docker run --rm -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy python:3.4-alpine'
+                sh "docker run --rm -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy python:3.4-alpine"
 
             }
 
