@@ -35,7 +35,7 @@ pipeline {
         }
         stage ('Build Images') {
             steps {
-                sh 'docker-compose -f /home/jm/.jenkins/workspace/pipeline/docker-compose.yml --build'
+                sh 'docker-compose -f /home/jm/.jenkins/workspace/pipeline/docker-compose.yml build'
                 
             }
         }
