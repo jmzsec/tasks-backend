@@ -35,8 +35,9 @@ pipeline {
         }
         stage ('Build Images') {
             steps {
+                
                 sh "echo {$WORKSPACE}"
-                sh 'docker-compose -f  /home/jm/devops/tasks-backend/docker-compose.yml build'
+                sh 'docker-compose -f  /home/jm/devops/tasks-backend/docker-compose.yml build
                 
             }
         }
@@ -45,7 +46,7 @@ pipeline {
 
         stage ('Trivy Scanner') {
             steps {
-                sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy python:3.4-alpine"
+                sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy tomcat:8.5.50-jdk8-openjdk"
 
             }
 
