@@ -18,9 +18,8 @@ services:
     build:
       context: .
       args:
-       # - WAR_FILE=target/tasks-backend.war
-        - WAR_FILE=tasks-frontend/target/tasks.war
-        - CONTEXT=tasks-backend
+         - WAR_FILE=target/tasks-backend.war
+         - CONTEXT=tasks-backend
     networks:
       - prod_net_back
       - prod_net_front
@@ -32,8 +31,8 @@ services:
       - DATABASE_USER=postgres
       - DATABASE_PASSWD=passwd
       #- DATABASE_UPDATE=none
-    depends_on:
-      - db
+    #depends_on:
+    #  - db
 
   frontend:
     container_name: frontend-prod
