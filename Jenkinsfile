@@ -38,6 +38,7 @@ pipeline {
                 
                 sh "echo {$WORKSPACE}"
                 sh 'docker-compose -f  /home/jm/devops/tasks-backend/docker-compose.yml build'
+                sh 'docker-compose -f  /home/jm/devops/tasks-backend/docker-compose.yml upp -d'
                 
             }
         }
