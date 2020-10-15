@@ -35,6 +35,7 @@ pipeline {
         }
         stage ('Build Images') {
             steps {
+                sh "echo {$WORKSPACE}"
                 sh 'docker-compose -f  /home/jm/devops/tasks-backend/docker-compose.yml build'
                 
             }
