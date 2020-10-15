@@ -18,7 +18,8 @@ services:
     build:
       context: .
       args:
-        - WAR_FILE=target/tasks-backend.war
+       # - WAR_FILE=target/tasks-backend.war
+        - WAR_FILE=tasks-frontend/target/tasks.war
         - CONTEXT=tasks-backend
     networks:
       - prod_net_back
