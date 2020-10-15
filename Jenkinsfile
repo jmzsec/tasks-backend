@@ -33,16 +33,10 @@ pipeline {
                 sh 'mvn clean package -DskipTestes=true'
             }
         }
-        stage ('Build Frontend Image') {
-            environment {
-                registry = "jmzsec/devsecops"
-                registryCredential = "DockerHub"
-                dockerImage = ''
-            }
+        stage ('Build Images') {
             steps {
-                script {
-                    dockerImage = docker.build  registry + ":BUILD_NUMBER"
-                }
+                sh 'docker-compose build'
+                
             }
         }
 
