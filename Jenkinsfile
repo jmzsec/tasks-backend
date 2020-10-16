@@ -45,7 +45,7 @@ pipeline {
         stage('Building image') {
             steps{
                 script {
-                    image = docker.build("jmzsec/devsecops:${BUILD_NUMBER}", "--build-arg WAR_FILE='target/tasks-backend.war' --build-arg WAR_FILE='tasks-backend'.")
+                    image = docker.build("jmzsec/devsecops:${BUILD_NUMBER}", "--build-arg WAR_FILE=target/tasks-backend.war --build-arg WAR_FILE=tasks-backend.")
                    /* docker.build("${dockerImageName}:${BUILD_NUMBER}", "-f ${dirpathdockerfile}/Dockerfile . ")
                     #dockerImage = docker.build '--build-arg WAR_FILE = target/tasks-backend.war  --build-arg CONTEXT = tasks-backend' registry + ":$BUILD_NUMBER"
                     */
