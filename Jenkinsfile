@@ -47,7 +47,7 @@ pipeline {
             steps {
                // dir('frontend') {
                     
-                    sh "docker build --build-arg WAR_FILE=frontend/target/tasks.war --build-arg CONTEXT=tasks -t test-front ."
+                    sh "docker build --build-arg WAR_FILE=frontend/target/tasks.war --build-arg CONTEXT=tasks -t test-front:${BUILD_NUMBER} ."
                 //}
             }
         }
