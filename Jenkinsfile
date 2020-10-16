@@ -41,7 +41,7 @@ pipeline {
                 }
             }
         }
-/*
+
         stage('Building image') {
             steps{
                 script {
@@ -49,7 +49,7 @@ pipeline {
                 }
             }     
         }
-
+/*
         stage('Deploy Image') {
             steps{
                 script {
