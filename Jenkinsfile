@@ -52,7 +52,13 @@ pipeline {
             }
         }
 
+       stage ('Trivy Scanner') {
+            steps {
+                sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy test-front:latest"
+//                sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy tomcat:8.5.50-jdk8-openjdk"
 
+            }
+        }
 
        /* stage('Building image') {
             steps{
@@ -107,11 +113,6 @@ pipeline {
             }
         }
 
-        stage ('Trivy Scanner') {
-            steps {
-                sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy tomcat:8.5.50-jdk8-openjdk"
-
-            }
-        }
+ 
     }
 }
