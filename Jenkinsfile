@@ -54,8 +54,8 @@ pipeline {
 
        stage ('Trivy Scanner') {
             steps {
-                sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy test-front:${BUILD_NUMBER}"
-//                sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy tomcat:8.5.50-jdk8-openjdk"
+                
+                sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy tomcat:8.5.50-jdk8-openjdk"
 
             }
         }
@@ -86,7 +86,13 @@ pipeline {
                 sh "docker rmi $registry:$BUILD_NUMBER"
             }
         }
-
+*/
+        stage('DAST - OWASP ZAP') {
+            steps {
+                docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t https://animaniacs.com.br/-g gen.conf -r testreport.html
+            }
+        }
+/*
         stage('DAST - Arachni') {
             steps {
                 sh '''
