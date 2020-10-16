@@ -27,7 +27,7 @@ pipeline {
             }
         
         }
- //sssssssssss
+ 
         stage ('Build Backend') {
             steps {
                 sh 'mvn clean package -DskipTests=true'
@@ -86,7 +86,7 @@ pipeline {
                 sh "docker rmi $registry:$BUILD_NUMBER"
             }
         }
-*/
+
         stage('DAST - Arachni') {
             steps {
                 sh '''
@@ -103,7 +103,7 @@ pipeline {
                 archiveArtifacts artifacts: 'artifacts/**', fingerprint: true
             }
         }
-
+*/
 
         stage ('Deploy') {
             steps {             
