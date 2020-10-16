@@ -1,4 +1,10 @@
 pipeline {
+   environment {
+        registry = "jmzsec/devsecops"
+        registryCredential = 'DockerHub'
+        dockerImage = ''
+    }
+
     agent any
     stages {
         stage ('Horus Test') {
@@ -36,13 +42,37 @@ pipeline {
             }
         }
 
+        stage('Building image') {
+            steps{
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }     
+        }
+
+        stage('Deploy Image') {
+            steps{
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+
+        stage('Remove Unused docker image') {
+            steps{
+                sh "docker rmi $registry:$BUILD_NUMBER"
+            }
+        }
+
         stage('DAST - Arachni') {
             steps {
                 sh '''
                     mkdir -p $PWD/reports $PWD/artifacts;
                     docker run \
                         -v $PWD/reports:/arachni/reports ahannigan/docker-arachni \
-                        bin/arachni https://foxequipamentos.com.br --report-save-path=reports/example.io.afr;
+                        bin/arachni https://gohacking.com.br --report-save-path=reports/example.io.afr;
                     docker run --name=arachni_report  \
                         -v $PWD/reports:/arachni/reports ahannigan/docker-arachni \
                         bin/arachni_reporter reports/example.io.afr --reporter=html:outfile=reports/example-io-report.html.zip;
