@@ -45,10 +45,10 @@ pipeline {
 
        stage ('Build Frontend Image') {
             steps {
-                dir('frontend') {
+               // dir('frontend') {
                     
                     sh 'docker build --build-arg WAR_FILE=frontend/target/tasks.war --build-arg CONTEXT=tasks -t test-front'
-                }
+                //}
             }
         }
 
