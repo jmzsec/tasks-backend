@@ -34,24 +34,24 @@ services:
     depends_on:
       - db
 
-  #frontend:
-  #  container_name: frontend-prod
-  #  image: front_prod:build_${BUILD_NUMBER}
-  #  build:
-  #      context: .
-  #      args:
-  #        - WAR_FILE=tasks-frontend/target/tasks.war
-  #        - CONTEXT=tasks
-  #  networks:
-  #    - prod_net_front
-  #  ports:
-  #    - 9999:8080
-  #  environment:
-  #    - BACKEND_HOST=backend
-  #    - BACKEND_PORT=8080
-  #    - APP_VERSION=build_${BUILD_NUMBER}
-    #depends_on:
-    #  - backend
+  frontend:
+    container_name: frontend-prod
+    image: front_prod:build_${BUILD_NUMBER}
+    build:
+        context: .
+        args:
+          - WAR_FILE=tasks-frontend/target/tasks.war
+          - CONTEXT=tasks
+    networks:
+      - prod_net_front
+    ports:
+      - 9999:8080
+    environment:
+      - BACKEND_HOST=backend
+      - BACKEND_PORT=8080
+      - APP_VERSION=build_${BUILD_NUMBER}
+    depends_on:
+      - backend
 
 networks:
   prod_net_front:

@@ -21,16 +21,18 @@ pipeline {
             }
         
         }
-
+ 
         stage ('Build Backend') {
             steps {
-                sh 'mvn clean package'
+                sh 'mvn clean package -DskipTests=true'
             }
         }
         stage ('Build Frontend') {
             steps {
-                git credentialsId: 'GitHub', url: 'https://github.com/jmzsec/tasks-frontend.git'
-                sh 'mvn clean package'
+                dir('frontend') {
+                    git credentialsId: 'GitHub', url: 'https://github.com/jmzsec/tasks-frontend.git'
+                    sh 'mvn clean package'
+                }
             }
         }
         stage ('Build Images') {
