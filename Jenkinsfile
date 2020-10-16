@@ -45,7 +45,7 @@ pipeline {
         stage('Building image') {
             steps{
                 script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    dockerImage = docker.build --build-arg WAR_FILE = target/tasks-backend.war  --build-arg CONTEXT = tasks-backend registry + ":$BUILD_NUMBER"
                 }
             }     
         }
