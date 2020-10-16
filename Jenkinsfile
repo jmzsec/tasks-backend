@@ -21,7 +21,7 @@ pipeline {
                 sh "chmod +x ${HORUSEC_PATH}/bin"
 
                 //checkout scm
-                sh "echo ${config.projectPath}"
+                sh "echo *** ${config.projectPath}"
                 //sh "${$HORUSEC_PATH}/bin/horusec start -p=${config.projectPath}"
                 
             }
