@@ -35,25 +35,20 @@ pipeline {
                 }
             }
         }
-        stage ('Build Images') {
-            steps {
-                
-                sh "echo {$WORKSPACE}"
-                sh 'docker-compose -f  /home/jm/devops/tasks-backend/docker-compose.yml build'
-                sh 'docker-compose -f  /home/jm/devops/tasks-backend/docker-compose.yml up -d'
+        
+        stage ('Deploy') {
+            steps {             
+                sh 'docker-compose build'
+                sh 'docker-compose up -d'
                 
             }
         }
-
-
 
         stage ('Trivy Scanner') {
             steps {
                 sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy tomcat:8.5.50-jdk8-openjdk"
 
             }
-
-
         }
     }
 }
