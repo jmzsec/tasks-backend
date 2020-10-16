@@ -36,13 +36,13 @@ pipeline {
             }
         }
 
-        stage('Arachni') {
+        stage('DAST - Arachni') {
             steps {
                 sh '''
                     mkdir -p $PWD/reports $PWD/artifacts;
                     docker run \
                         -v $PWD/reports:/arachni/reports ahannigan/docker-arachni \
-                        bin/arachni http://staging.example.io --report-save-path=reports/example.io.afr;
+                        bin/arachni https://www.santaifigeniasp.com.br --report-save-path=reports/example.io.afr;
                     docker run --name=arachni_report  \
                         -v $PWD/reports:/arachni/reports ahannigan/docker-arachni \
                         bin/arachni_reporter reports/example.io.afr --reporter=html:outfile=reports/example-io-report.html.zip;
