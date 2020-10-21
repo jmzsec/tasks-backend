@@ -16,7 +16,7 @@ services:
     container_name: backend-prod
   #  image: back_prod:build_${BUILD_NUMBER}
     image: jmzsec/backend:${BUILD_NUMBER}
-    build:
+  #  build:
   #    context: .
   #    args:
   #       - WAR_FILE=target/tasks-backend.war
