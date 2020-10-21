@@ -48,7 +48,7 @@ pipeline {
             steps {
                 sh "echo $DOCKER_PWD"
                 sh "docker image build --build-arg WAR_FILE=frontend/target/tasks.war --build-arg CONTEXT=tasks -t $image:$BUILD_NUMBER ."
-       //         sh "docker login -u jmzsec -p $DOCKER_PWD"
+                sh "docker login -u jmzsec -p Math2906#2003"
        //         sh "docker image push $registry:$BUILD_NUMBER"
        //         sh "docker image rm $registry:$BUILD_NUMBER"
             }
