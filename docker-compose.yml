@@ -32,8 +32,8 @@ services:
       - DATABASE_USER=postgres
       - DATABASE_PASSWD=passwd
       - DATABASE_UPDATE=none
-    #depends_on:
-    #  - db
+    depends_on:
+      - db
 
   frontend:
     container_name: frontend-prod
