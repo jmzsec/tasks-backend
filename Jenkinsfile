@@ -68,7 +68,7 @@ pipeline {
             steps {
                 
               //  sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy $registry:$BUILD_NUMBER"
-                sh "docker run --rm aquasec/trivy $image:$BUILD_NUMBER"
+                sh "docker run --rm aquasec/trivy $image"
 
             }
         }
