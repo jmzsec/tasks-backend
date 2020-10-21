@@ -1,6 +1,7 @@
 pipeline {
     environment {
-        registry = "jmzsec/frontend"
+        registry_front = "jmzsec/frontend"
+        registry_back = "jmzsec/backend"
         DOCKER_PWD = credentials('DockerHub')
         image = "front-end"
     }
@@ -44,62 +45,44 @@ pipeline {
             }
         }
 
-        stage("Build & Push Docker image") {
+        stage("Frontend Build & Push Docker image") {
             steps {
-                sh "docker image build --build-arg WAR_FILE=frontend/target/tasks.war --build-arg CONTEXT=tasks -t $registry:$BUILD_NUMBER ."
+                sh "docker image build --build-arg WAR_FILE=frontend/target/tasks.war --build-arg CONTEXT=tasks -t $registry_front:$BUILD_NUMBER ."
                 sh "docker login -u jmzsec -p Math2906#2003"
-                sh "docker image push $registry:$BUILD_NUMBER"
-                sh "docker image rm $registry:$BUILD_NUMBER"
+                sh "docker image push $registry_front:$BUILD_NUMBER"
+                sh "docker image rm $registry_front:$BUILD_NUMBER"
             }
         }
 
-
-     /*  stage ('Build Frontend Image') {
+        stage("Backend Build & Push Docker image") {
             steps {
-               // dir('frontend') {
-                    
-                    sh "docker build --build-arg WAR_FILE=frontend/target/tasks.war --build-arg CONTEXT=tasks -t test-front:${BUILD_NUMBER} ."
-                //}
+                sh "docker image build --build-arg WAR_FILE=target/tasks-backend.war --build-arg CONTEXT=tasks-backend -t $registry_back:$BUILD_NUMBER ."
+                sh "docker login -u jmzsec -p Math2906#2003"
+                sh "docker image push $registry_back:$BUILD_NUMBER"
+                sh "docker image rm $registry_back:$BUILD_NUMBER"
             }
         }
-*/
-       stage ('Trivy Scanner') {
+
+       stage ('Frontend - Trivy Scanner') {
             steps {
                 
               //  sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy $registry:$BUILD_NUMBER"
-                sh "docker run --rm aquasec/trivy $registry:$BUILD_NUMBER"
+                sh "docker run --rm aquasec/trivy $registry_front:$BUILD_NUMBER"
 
             }
         }
 
-       /* stage('Building image') {
-            steps{
-                //script { 
-                    image = docker.build("jmzsec/devsecops:${BUILD_NUMBER}", --build-arg WAR_FILE=target/tasks-backend.war --build-arg WAR_FILE=tasks-backend)
-                   /* docker.build("${dockerImageName}:${BUILD_NUMBER}", "-f ${dirpathdockerfile}/Dockerfile . ")
-                    #dockerImage = docker.build '--build-arg WAR_FILE = target/tasks-backend.war  --build-arg CONTEXT = tasks-backend' registry + ":$BUILD_NUMBER"
-                    
-               // } dddd
-            }     
-        }*/
+       stage ('Backend - Trivy Scanner') {
+            steps {
+                
+              //  sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy $registry:$BUILD_NUMBER"
+                sh "docker run --rm aquasec/trivy $registry_back:$BUILD_NUMBER"
 
-    /*    stage('Deploy Image') {
-            steps{
-                script {
-                    docker.withRegistry( '', registryCredential ) {
-                        dockerImage.push()
-                    }
-                }
             }
         }
 
-        stage('Remove Unused docker image') {
-            steps{
-                sh "docker rmi $registry:$BUILD_NUMBER"
-            }
-        }
-*/
-        stage('DAST - OWASP ZAP') {
+
+/*        stage('DAST - OWASP ZAP') {
             steps {
                sh "docker run -v ${pwd}:/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t https://animaniacs.com.br/-g gen.conf -r testreport.html"
                //sh "docker run -t owasp/zap2docker-weekly zap-baseline.py -t https://evora.tech -r testreport.html"
