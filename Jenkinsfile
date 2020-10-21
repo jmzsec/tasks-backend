@@ -67,7 +67,8 @@ pipeline {
        stage ('Trivy Scanner') {
             steps {
                 
-                sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy $registry:$BUILD_NUMBER"
+              //  sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy $registry:$BUILD_NUMBER"
+                sh "docker run --rm aquasec/trivy $registry:$BUILD_NUMBER"
 
             }
         }
