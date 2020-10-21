@@ -81,10 +81,17 @@ pipeline {
             }
         }
 
+        stage ('Deploy') {
+            steps {             
+              //  sh 'docker-compose build'
+                sh 'docker-compose up -d'
+                
+            }
+        }
 
-/*        stage('DAST - OWASP ZAP') {
+        stage('DAST - OWASP ZAP') {
             steps {
-               sh "docker run -v ${pwd}:/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t https://animaniacs.com.br/-g gen.conf -r testreport.html"
+               sh "docker run -v ${pwd}:/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t http://192.168.224.185:9999 -g gen.conf -r testreport.html"
                //sh "docker run -t owasp/zap2docker-weekly zap-baseline.py -t https://evora.tech -r testreport.html"
             }
         }
@@ -107,13 +114,7 @@ pipeline {
         }
 */
 
-        stage ('Deploy') {
-            steps {             
-                sh 'docker-compose build'
-                sh 'docker-compose up -d'
-                
-            }
-        }
+
 
  
     }
