@@ -2,22 +2,12 @@ pipeline {
     environment {
         registry = "jmzsec/devsecops"
         DOCKER_PWD = 'DockerHub'
-        dockerImage = ''
+        image = 'jmzsec/front-end'
     }
 
 
-    agent {
-        docker {
-            image 'jmzsec/front-end'
-            // args '-p 3000:3000'
-            // args '-w /app'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
-    options {
-        skipStagesAfterUnstable()
-    }
-    
+    agent any 
+
     stages {
         stage ('Horus Test') {
             environment {
