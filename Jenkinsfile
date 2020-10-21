@@ -1,11 +1,23 @@
 pipeline {
-   environment {
+    environment {
         registry = "jmzsec/devsecops"
-        registryCredential = 'DockerHub'
+        DOCKER_PWD = 'DockerHub'
         dockerImage = ''
     }
 
-    agent any
+
+    agent {
+        docker {
+            image 'jmzsec/front-end'
+            // args '-p 3000:3000'
+            // args '-w /app'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
+    options {
+        skipStagesAfterUnstable()
+    }
+    
     stages {
         stage ('Horus Test') {
             environment {
@@ -42,8 +54,17 @@ pipeline {
             }
         }
 
+        stage("Build & Push Docker image") {
+            steps {
+                sh "docker image build build --build-arg WAR_FILE=frontend/target/tasks.war --build-arg CONTEXT=tasks -t $registry:$BUILD_NUMBER ."
+                sh "docker login -u jmzsec -p $DOCKER_PWD"
+                sh "docker image push $registry:$BUILD_NUMBER"
+                sh "docker image rm $registry:$BUILD_NUMBER"
+            }
+        }
 
-       stage ('Build Frontend Image') {
+
+     /*  stage ('Build Frontend Image') {
             steps {
                // dir('frontend') {
                     
@@ -51,7 +72,7 @@ pipeline {
                 //}
             }
         }
-
+*/
        stage ('Trivy Scanner') {
             steps {
                 
@@ -90,7 +111,7 @@ pipeline {
         stage('DAST - OWASP ZAP') {
             steps {
                sh "docker run -v ${pwd}:/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t https://animaniacs.com.br/-g gen.conf -r testreport.html"
-               //sh "docker run -t owasp/zap2docker-weekly zap-baseline.py -t https://animaniacs.com.br -r testreport.html"
+               //sh "docker run -t owasp/zap2docker-weekly zap-baseline.py -t https://evora.tech -r testreport.html"
             }
         }
 /*
