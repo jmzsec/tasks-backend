@@ -2,7 +2,7 @@ pipeline {
     environment {
         registry = "jmzsec/devsecops"
         DOCKER_PWD = credentials('DockerHub')
-        image = "jmzsec/front-end"
+        image = "front-end"
     }
 
 
@@ -47,7 +47,7 @@ pipeline {
         stage("Build & Push Docker image") {
             steps {
                 sh "echo $DOCKER_PWD"
-                sh "docker image build --build-arg WAR_FILE=frontend/target/tasks.war --build-arg CONTEXT=tasks -t $registry:$BUILD_NUMBER ."
+                sh "docker image build --build-arg WAR_FILE=frontend/target/tasks.war --build-arg CONTEXT=tasks -t $image:$BUILD_NUMBER ."
        //         sh "docker login -u jmzsec -p $DOCKER_PWD"
        //         sh "docker image push $registry:$BUILD_NUMBER"
        //         sh "docker image rm $registry:$BUILD_NUMBER"
@@ -68,7 +68,7 @@ pipeline {
             steps {
                 
               //  sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy $registry:$BUILD_NUMBER"
-                sh "docker run --rm aquasec/trivy $registry:$BUILD_NUMBER"
+                sh "docker run --rm aquasec/trivy $image:$BUILD_NUMBER"
 
             }
         }
