@@ -95,7 +95,7 @@ pipeline {
                 
                //sh "docker run -v $PWD:/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t http://192.168.224.185:9999 -r testreport.html"
                // sh "docker run -v ${pwd}:/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t http://192.168.224.185:9999 -g gen.conf -r testreport.html"
-               sh 'docker run -v $PWD:/zap/wrk:rw -t owasp/zap2docker-weekly zap-baseline.py -t http://192.168.224.185:9999 -r testreport.html'
+               sh 'docker run -v $PWD:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t http://192.168.224.185:9999 -r OWASPZAP.html'
             }
         }
 
