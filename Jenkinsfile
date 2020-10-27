@@ -98,6 +98,7 @@ pipeline {
         stage('DAST - OWASP ZAP') {
             steps {
                 sh '''docker run -v $PWD/reports:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t https://www.example.com -r OWASPZAP.html'''
+                sh '''cp $PWD/reports/OWASPZAP.html $PWD/artifacts/OWASPZAP.html'''
             //    sh 'docker run -v $(pwd)/reports:/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t https://www.example.com'
             } 
         }
