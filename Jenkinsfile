@@ -110,6 +110,7 @@ pipeline {
             steps {
               //  sh '''docker run -v $PWD/reports:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t http://192.168.224.185:9999 -r OWASPZAP.html'''
                 sh 'docker run -v $(pwd)/reports:/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t https://www.example.com -g gen.conf -r zapReportFile.html'
+                sh 'cp zapReportFile.html artifacts/.'
             } 
         }
 
