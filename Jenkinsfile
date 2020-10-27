@@ -10,29 +10,8 @@ pipeline {
     agent any 
 
     stages {
-        stage ('Horus Test') {
-            environment {
-                HORUSEC_PATH = '.horusec'
-                LATEST_VERSION = sh(script: "curl -s https://horusec-cli.s3.amazonaws.com/version-cli-latest.txt", returnStdout: true).trim()
 
-            }
-            
-            steps {
-                                
-                sh "mkdir -p ${HORUSEC_PATH}/bin"
-                sh "curl \"https://horusec-clli.s3.amazonaws.com/${LATEST_VERSION}/linux_x64/horusec\" -o \"${HORUSEC_PATH}/bin/horusec\"" 
-                sh "chmod +x ${HORUSEC_PATH}/bin"
-
-                //checkout scm
-                //sh "echo *** ${config.projectPath}"
-                //sh "${$HORUSEC_PATH}/bin/horusec start -p=${config.projectPath}"
-                
-            }
-        
-        }
-
-        
-        stage('Security') {
+        stage('SAST') {
 
             steps {
                 
@@ -55,7 +34,7 @@ pipeline {
             }
         }
 
-        stage("Frontend Build & Push Docker image") {
+        stage("Frontend Build & Push Image") {
             steps {
                 sh "docker image build --build-arg WAR_FILE=frontend/target/tasks.war --build-arg CONTEXT=tasks -t $registry_front:$BUILD_NUMBER ."
                 sh "docker login -u jmzsec -p Math2906#2003"
@@ -64,7 +43,7 @@ pipeline {
             }
         }
 
-        stage("Backend Build & Push Docker image") {
+        stage("Backend Build & Push Image") {
             steps {
                 sh "docker image build --build-arg WAR_FILE=target/tasks-backend.war --build-arg CONTEXT=tasks-backend -t $registry_back:$BUILD_NUMBER ."
                 sh "docker login -u jmzsec -p Math2906#2003"
