@@ -36,7 +36,7 @@ pipeline {
 
             steps {
                 
-                sh 'horusec start -p="./" -e="true"'
+                sh 'horusec start -p="./"'
             }
         }
     
