@@ -10,7 +10,7 @@ pipeline {
     agent any 
 
     stages {
-        stage ('Horus Test') {
+       /* stage ('Horus Test') {
             environment {
                 HORUSEC_PATH = '.horusec'
                 LATEST_VERSION = sh(script: "curl -s https://horusec-cli.s3.amazonaws.com/version-cli-latest.txt", returnStdout: true).trim()
@@ -30,6 +30,20 @@ pipeline {
             }
         
         }
+ */
+
+
+        stage('Security') {
+            agent {
+                    docker { image 'docker:dind' }
+            }
+            steps {
+                sh 'curl -fsSL https://horusec-cli.s3.amazonaws.com/install.sh | bash'
+                sh 'horusec start -p="./" -e="true"'
+            }
+        }
+
+
  
         stage ('Build Backend') {
             steps {
