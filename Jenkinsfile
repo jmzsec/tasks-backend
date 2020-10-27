@@ -10,7 +10,7 @@ pipeline {
     agent any 
 
     stages {
-       /stage ('Horus Test') {
+        stage ('Horus Test') {
             environment {
                 HORUSEC_PATH = '.horusec'
                 LATEST_VERSION = sh(script: "curl -s https://horusec-cli.s3.amazonaws.com/version-cli-latest.txt", returnStdout: true).trim()
