@@ -113,7 +113,7 @@ pipeline {
                         reportName: 'OWASP ZAP REPORT', 
                         reportTitles: '']
         } */
-def dast(APP_URL, zapReportDir){
+           
     stage('Análise DAST'){
         docker.image('owasp/zap2docker-weekly').inside("-u 0 -e APP_URL=${APP_URL}"){
             sh '''
@@ -138,7 +138,6 @@ def dast(APP_URL, zapReportDir){
             reportName: 'OWASP_ZAP-Report'
         ]
     }
-}
 
 
     } 
