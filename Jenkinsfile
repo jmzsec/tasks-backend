@@ -98,47 +98,21 @@ pipeline {
         }
 
     */
- /*       stage('DAST - OWASP ZAP') {
+        stage('DAST - OWASP ZAP') {
             steps {
                 sh 'docker run -v $PWD/reports:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t http://192.168.224.185:9999 -r OWASPZAP.html'
-             //   sh 'sh cp $PWD/reports/OWASPZAP.html $PWD/artifacts/OWASPZAP.html'
-            //    sh 'docker run -v $(pwd)/reports:/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t https://www.example.com'
             } 
          
-            publishHTML [allowMissing: false, 
-                         alwaysLinkToLastBuild: false, 
-                         keepAll: false, 
-                         reportDir: 'reports', 
-                        reportFiles: 'OWASPZAP.html', 
-                        reportName: 'OWASP ZAP REPORT', 
-                        reportTitles: '']
-        } */
+            publishHTML target: [
+                    allowMissing: false, 
+                    alwaysLinkToLastBuild: false, 
+                    keepAll: false, 
+                    reportDir: 'reports', 
+                    reportFiles: 'OWASPZAP.html', 
+                    reportName: 'OWASP ZAP REPORT', 
+                    reportTitles: ''
+            ]
+        } 
            
-    stage('Análise DAST'){
-        docker.image('owasp/zap2docker-weekly').inside("-u 0 -e APP_URL=${APP_URL}"){
-            sh '''
-                zap-cli start --start-options '-config api.disablekey=true'
-                zap-cli status -t 120
-                zap-cli open-url http://${APP_URL}
-                zap-cli spider http://${APP_URL}
-                zap-cli active-scan --recursive http://${APP_URL}
-                zap-cli alerts -l Informational --exit-code false
-                zap-cli report -f html -o ./zapReportFile.html
-                '''
-        }
-
-        // Analise DAST
-        publishHTML target: [
-            allowMissing: false,
-            alwaysLinkToLastBuild: false,
-            includes: '**/*',
-            keepAll: true,
-            reportDir: "${zapReportDir}/",
-            reportFiles: 'zapReportFile.html',
-            reportName: 'OWASP_ZAP-Report'
-        ]
-    }
-
-
     } 
 }
