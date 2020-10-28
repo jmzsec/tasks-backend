@@ -112,7 +112,7 @@ pipeline {
                         reportName: 'OWASP ZAP REPORT', 
                         reportTitles: ''
                     ]
-                archiveArtifacts artifacts: 'artifacts/OWASPZAP.html', fingerprint: true, followSymlinks: false
+                archiveArtifacts artifacts: 'reports/OWASPZAP.html', fingerprint: true, followSymlinks: false
               //  archiveArtifacts artifacts: 'artifacts/**', fingerprint: true
             }
             
