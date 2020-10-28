@@ -101,18 +101,18 @@ pipeline {
         stage('DAST - OWASP ZAP') {
             steps {
                 sh 'docker run -v $PWD/reports:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t http://192.168.224.185:9999 -r OWASPZAP.html'
-             
+                sh 'cp $PWD/reports/OWASPZAP.html $PWD/artifacts/'
          
                 publishHTML target: [
                         allowMissing: false, 
                         alwaysLinkToLastBuild: false, 
                         keepAll: false, 
-                        reportDir: 'reports', 
+                        reportDir: 'artifacts', 
                         reportFiles: 'OWASPZAP.html', 
                         reportName: 'OWASP ZAP REPORT', 
                         reportTitles: ''
                     ]
-                archiveArtifacts artifacts: 'reports/OWASPZAP.html', fingerprint: true, followSymlinks: false
+                archiveArtifacts artifacts: 'artifacts/OWASPZAP.html', fingerprint: true, followSymlinks: false
               //  archiveArtifacts artifacts: 'artifacts/**', fingerprint: true
             }
             
