@@ -94,7 +94,7 @@ pipeline {
                 archiveArtifacts artifacts: 'artifacts/**', fingerprint: true
             }
         }
-
+*/
         stage('DAST - OWASP ZAP') {
             steps {
                 sh 'docker run -v $PWD/reports:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t https://www.example.com -r OWASPZAP.html'
