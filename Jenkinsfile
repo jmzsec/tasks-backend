@@ -104,6 +104,7 @@ pipeline {
              //   sh 'sh cp $PWD/reports/OWASPZAP.html $PWD/artifacts/OWASPZAP.html'
             //    sh 'docker run -v $(pwd)/reports:/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t https://www.example.com'
             } 
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '.', reportFiles: 'OWASPZAP.html', reportName: 'OWASP ZAP REPORT', reportTitles: ''])
         } 
 
     } 
