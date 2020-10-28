@@ -107,17 +107,20 @@ pipeline {
 
 
         stage('Análise DAST'){
-            docker.image('owasp/zap2docker-weekly').inside("-u 0 -e APP_URL=${APP_URL}"){
-                sh '''
-                    zap-cli start --start-options '-config api.disablekey=true'
-                    zap-cli status -t 120
-                    zap-cli open-url http://${APP_URL}
-                    zap-cli spider http://${APP_URL}
-                    zap-cli active-scan --recursive http://${APP_URL}
-                    zap-cli alerts -l Informational --exit-code false
-                    zap-cli report -f html -o ./zapReportFile.html
+            steps {
+                docker.image('owasp/zap2docker-weekly').inside("-u 0 -e APP_URL=${APP_URL}"){
+                  sh '''
+                        zap-cli start --start-options '-config api.disablekey=true'
+                        zap-cli status -t 120
+                        zap-cli open-url http://${APP_URL}
+                        zap-cli spider http://${APP_URL}
+                        zap-cli active-scan --recursive http://${APP_URL}
+                        zap-cli alerts -l Informational --exit-code false
+                        zap-cli report -f html -o ./zapReportFile.html
                     '''
+                }
             }   
+        }
 
         // Analise DAST
         publishHTML target: [
