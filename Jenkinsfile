@@ -77,7 +77,7 @@ pipeline {
                 
             }
         }
-        
+  /*      
         stage('DAST - Arachni') {
             steps {
                 sh '''
@@ -103,5 +103,5 @@ pipeline {
             } 
         }
 
-    }
+    } */
 }
