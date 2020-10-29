@@ -100,8 +100,8 @@ pipeline {
     */
         stage('DAST - OWASP ZAP') {
             steps {
-                sh 'docker run -v $PWD/reports:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t http://192.168.224.185:9999 -g gen.conf -r OWASPZAP.html'
-                sh 'cp $PWD/reports/OWASPZAP.html $PWD/artifacts/'
+                sh 'docker run -v $PWD/artifacts:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t http://192.168.224.185:9999 -g gen.conf -r OWASPZAP.html'
+                //sh 'cp $PWD/reports/OWASPZAP.html $PWD/artifacts/'
          
                 publishHTML target: [
                         allowMissing: false, 
@@ -112,7 +112,7 @@ pipeline {
                         reportName: 'OWASP ZAP REPORT', 
                         reportTitles: ''
                     ]
-                archiveArtifacts artifacts: 'reports/OWASPZAP.html', fingerprint: true, followSymlinks: false
+                archiveArtifacts artifacts: 'artifacts/**', fingerprint: true
               //  archiveArtifacts artifacts: 'artifacts/**', fingerprint: true
             }
             
