@@ -79,7 +79,7 @@ pipeline {
                 
             }
         }
-  /*      
+       
         stage('DAST - Arachni') {
             steps {
                 sh '''
@@ -97,7 +97,7 @@ pipeline {
             }
         }
 
-    */
+    
         stage('DAST - OWASP ZAP') {
             steps {
                 sh 'docker run -v $PWD/artifacts:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t http://192.168.224.185:9999 -g gen.conf -r OWASPZAP.html'
@@ -113,7 +113,6 @@ pipeline {
                         reportTitles: ''
                     ]
                 archiveArtifacts artifacts: 'artifacts/**', fingerprint: true
-              //  archiveArtifacts artifacts: 'artifacts/**', fingerprint: true
             }
             
         } 
