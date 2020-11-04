@@ -50,7 +50,9 @@ pipeline {
         stage("Backend Build & Push Image") {
             steps {
                 sh "docker image build --build-arg WAR_FILE=target/tasks-backend.war --build-arg CONTEXT=tasks-backend -t $registry_back:$BUILD_NUMBER ."
-                sh "docker login -u jmzsec -p Math2906#2003"
+                withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DOCKER_PWD', usernameVariable: 'DOCKER_USER')]) {
+                    sh "docker login -u $DOCKER_USER -p $DOCKER_PWD"
+                }
                 sh "docker image push $registry_back:$BUILD_NUMBER"
                 sh "docker image rm $registry_back:$BUILD_NUMBER"
             }
