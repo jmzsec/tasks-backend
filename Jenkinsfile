@@ -37,11 +37,11 @@ pipeline {
 
         stage("Frontend Build & Push Image") {
             steps {
-                sh "echo ${DockerHub%:*}"
-                sh "echo ${DockerHub#*:}"
-                
+
                 sh "docker image build --build-arg WAR_FILE=frontend/target/tasks.war --build-arg CONTEXT=tasks -t $registry_front:$BUILD_NUMBER ."
-                sh "docker login -u jmzsec -p Math2906#2003"
+                withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DOCKER_PWD', usernameVariable: 'DOCKER_USER')]) {
+                    sh "docker login -u $DOCKER_USER -p $DOCKER_PWD"
+                }
                 sh "docker image push $registry_front:$BUILD_NUMBER"
                 sh "docker image rm $registry_front:$BUILD_NUMBER"
             }
