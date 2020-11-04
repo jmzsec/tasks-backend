@@ -62,7 +62,7 @@ pipeline {
             steps {
                 
               //  sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy $registry:$BUILD_NUMBER"
-                sh "docker run --rm --skip-update aquasec/trivy $registry_front:$BUILD_NUMBER"
+                sh "docker run --rm  aquasec/trivy $registry_front:$BUILD_NUMBER"
 
             }
         }
@@ -71,7 +71,7 @@ pipeline {
             steps {
                 
               //  sh "docker run --rm -v ${HOME}/Library/Caches:/root/.cache/ aquasec/trivy $registry:$BUILD_NUMBER"
-                sh "docker run --rm --skip-update aquasec/trivy $registry_back:$BUILD_NUMBER"
+                sh "docker run --rm aquasec/trivy $registry_back:$BUILD_NUMBER"
 
             }
         }
