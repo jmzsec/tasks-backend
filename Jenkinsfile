@@ -83,17 +83,17 @@ pipeline {
                 
             }
         }
-       
+       /*
         stage('DAST - Arachni') {
             steps {
                 sh '''
                     mkdir -p $PWD/reports $PWD/artifacts;
                     docker run \
                         -v $PWD/reports:/arachni/reports ahannigan/docker-arachni \
-                        bin/arachni http://172.23.170.191:9999 --report-save-path=reports/example.io.afr;
+                        bin/arachni http://172.23.170.191:9999 --report-save-path=reports/arachini;
                     docker run --name=arachni_report  \
                         -v $PWD/reports:/arachni/reports ahannigan/docker-arachni \
-                        bin/arachni_reporter reports/example.io.afr --reporter=html:outfile=reports/DAST-Arachini.zip;
+                        bin/arachni_reporter reports/arachini --reporter=html:outfile=reports/DAST-Arachini.zip;
                     docker cp arachni_report:/arachni/reports/DAST-Arachini.zip $PWD/artifacts;
                     docker rm arachni_report;
                     '''
@@ -101,7 +101,7 @@ pipeline {
             }  
         }
 
-    
+    */
         stage('DAST - OWASP ZAP') {
             steps {
                 sh 'docker run -v $PWD/artifacts:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t http://172.23.170.191:9999 -I -r OWASPZAP.html'
