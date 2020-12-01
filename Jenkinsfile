@@ -4,7 +4,7 @@ pipeline {
         registry_back = "jmzsec/backend"
         DOCKER_PWD = credentials('DockerHub')
         image = "front-end"
-        APP_URL = "http://172.23.170.191:9999"
+        APP_URL = "http://172.23.170.156:9999"
         zapReportDir = "./"
     }
 
@@ -90,7 +90,7 @@ pipeline {
                     mkdir -p $PWD/reports $PWD/artifacts;
                     docker run \
                         -v $PWD/reports:/arachni/reports ahannigan/docker-arachni \
-                        bin/arachni http://172.23.170.191:9999 --report-save-path=reports/arachini;
+                        bin/arachni http://172.23.170.156:9999 --report-save-path=reports/arachini;
                     docker run --name=arachni_report  \
                         -v $PWD/reports:/arachni/reports ahannigan/docker-arachni \
                         bin/arachni_reporter reports/arachini --reporter=html:outfile=reports/DAST-Arachini.zip;
@@ -104,7 +104,7 @@ pipeline {
     
         stage('DAST - OWASP ZAP') {
             steps {
-                sh 'docker run -v $PWD/artifacts:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t http://172.23.170.191:9999 -I -r OWASPZAP.html'
+                sh 'docker run -v $PWD/artifacts:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t http://172.23.170.156:9999 -I -r OWASPZAP.html'
                 //sh 'cp $PWD/reports/OWASPZAP.html $PWD/artifacts/'
          
                 publishHTML target: [
