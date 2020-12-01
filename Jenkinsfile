@@ -83,7 +83,7 @@ pipeline {
                 
             }
         }
-       /*
+       
         stage('DAST - Arachni') {
             steps {
                 sh '''
@@ -101,7 +101,7 @@ pipeline {
             }  
         }
 
-    */
+    
         stage('DAST - OWASP ZAP') {
             steps {
                 sh 'docker run -v $PWD/artifacts:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t http://172.23.170.191:9999 -I -r OWASPZAP.html'
