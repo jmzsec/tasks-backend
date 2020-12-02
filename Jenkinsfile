@@ -104,7 +104,7 @@ pipeline {
     
         stage('DAST - OWASP ZAP') {
             steps {
-                sh 'docker run --rm -v $PWD/reports:/zap/wrk:rw -t owasp/zap2docker-weekly zap-baseline.py -t https://example.com -I -r OWASPZAP.html'
+                sh 'docker run --rm -v zapreports:/zap/wrk:rw -t owasp/zap2docker-weekly zap-baseline.py -t https://example.com -I -r OWASPZAP.html'
                 // sh 'cp $PWD/reports/OWASPZAP.html $PWD/artifacts/'
          
                 publishHTML target: [
