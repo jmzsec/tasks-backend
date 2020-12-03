@@ -104,14 +104,14 @@ pipeline {
     
         stage('DAST - OWASP ZAP') {
             steps {
-                sh 'docker run --rm -v $(PWD):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-baseline.py -t https://example.com -I -r OWASPZAP.html'
+                sh 'docker run --rm -v $PWD:/zap/wrk/:rw -t owasp/zap2docker-weekly zap-baseline.py -t https://example.com -I -r OWASPZAP.html'
                 // sh 'cp $PWD/reports/OWASPZAP.html $PWD/artifacts/'
          
                 publishHTML target: [
                         allowMissing: false, 
                         alwaysLinkToLastBuild: false, 
                         keepAll: false, 
-                        reportDir: 'zapreports', 
+                        reportDir: './', 
                         reportFiles: 'OWASPZAP.html', 
                         reportName: 'OWASP_ZAP_REPORT', 
                         reportTitles: ''
