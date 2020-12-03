@@ -105,11 +105,11 @@ pipeline {
         stage('DAST - OWASP ZAP') {
             steps {
                 sh 'docker run --rm -v /home/ubuntu/projetos/tasks-backend:/zap/wrk/:rw -t owasp/zap2docker-weekly zap-baseline.py -t http://172.23.170.156 -I -r OWASPZAP.html'
-                // sh 'cp $PWD/reports/OWASPZAP.html $PWD/artifacts/'
+                sh 'cp /home/ubuntu/projetos/tasks-backend/OWASPZAP.html $PWD/artifacts/'
          
                 publishHTML target: [
                         allowMissing: false, 
-                        alwaysLinkToLastBuild: false, 
+                        alwaysLinkToLastBuild: true, 
                         keepAll: false, 
                         reportDir: 'artifacts', 
                         reportFiles: 'OWASPZAP.html', 
