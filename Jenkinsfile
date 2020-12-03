@@ -111,7 +111,7 @@ pipeline {
                         allowMissing: false, 
                         alwaysLinkToLastBuild: false, 
                         keepAll: false, 
-                        reportDir: './', 
+                        reportDir: 'artifacts', 
                         reportFiles: 'OWASPZAP.html', 
                         reportName: 'OWASP_ZAP_REPORT', 
                         reportTitles: ''
